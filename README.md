@@ -1,7 +1,6 @@
 # swarchitect
 
-
-graph TB;
+graph LR;
 
     subgraph Explain
         NumericalModelExplainer
@@ -37,6 +36,9 @@ graph TB;
     RiskPatternPrediction -->|depends on| ModelInterface
 
     ModelInterface -->|depends on| DataModule;
+
+    NumericalModel -->|depends on| ModelInterface;
+    ImageModel -->|depends on| ModelInterface;
 
     DataModule --> |depends on| DataExtractor;
 
