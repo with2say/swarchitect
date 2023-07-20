@@ -25,7 +25,31 @@ graph TB
 classDef running fill:#f9f,stroke:#333,stroke-width:4px
 class Checker,Simulator running
 
+#OLD
+'''
+graph TB
+    Checker["SimulationChecker"] 
+    Layout --> Checker
+    Checker --> |no data| Dispatcher
+    
+    subgraph Batch Layer
+        LayoutDB["Layouts(DB)"]
+    end
 
+    LayoutDB --> Checker
+    SimulationDB <--> |Request/Response| Checker
+    Dispatcher --> Simulator1
+    Dispatcher --> SimulatorN
+    Simulator1 --> SimulationDB
+    SimulatorN --> SimulationDB
+    
+    subgraph Realtime Layer
+        Layout["Input Layout"]
+    end
+
+classDef running fill:#f9f,stroke:#333,stroke-width:4px
+class Checker,Simulator1,SimulatorN,Dispatcher running
+'''
 
 # Seq. View
 sequenceDiagram
