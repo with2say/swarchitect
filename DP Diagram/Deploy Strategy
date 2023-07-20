@@ -1,0 +1,22 @@
+graph TB
+  Client["Local PC (Client)"]
+  subgraph "VWP Network"
+    Native["Python/Script"]
+    Server["Server (GPU/CPU)"]
+    LibraryAPI["Library API"]
+  end
+  Client --> |"VNC"| Native-->|"Call"| LibraryAPI 
+  LibraryAPI <-->|"Process Req./Response"| Server
+
+
+%% graph TB
+%%   Client["Local PC (Client)"] 
+%%   Native["Python/Script/App."]
+%%   Client --> Native
+
+%%   subgraph "VWP Network"
+%%     Server["Server (GPU/CPU)"]
+%%     WebAPI["Web API Server"]
+%%   end
+%%   Native <-->|"HTTP (Firewall Open)"| WebAPI
+%%   WebAPI <-->|"Process Req./Response"| Server

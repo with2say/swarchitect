@@ -1,0 +1,51 @@
+# Batch + Emulations with multicore
+sequenceDiagram
+    participant Client
+    participant Core1
+    participant CoreN
+    participant Result
+
+    par Core1 Execution
+        Client->>Core1: Input
+        activate Core1
+        note over Core1: Running Simulation
+        Core1->>Result: Result1
+        deactivate Core1
+    and CoreN Execution
+        Client->>CoreN: Input
+        activate CoreN
+        note over CoreN: Running Simulation
+        CoreN->>Result: ResultN
+        deactivate CoreN
+    end
+    activate Result
+    Result-->>Client: Combined Result
+    deactivate Result
+
+
+# Surrogate Modeling With Ensemble
+sequenceDiagram
+    participant Client
+    participant Simulation as Simulation (CPU Server)
+    participant AI Model as AI Model (GPU Server)
+    
+    alt model is not trained
+        Client->>AI Model: Input
+        Client->>Simulation: Input
+        activate Simulation
+        note over Simulation: Running Simulation
+        Simulation->>AI Model: Output
+        deactivate Simulation
+
+        activate AI Model
+        note over AI Model: Training
+        AI Model->>Client: Training Score
+        deactivate AI Model
+
+    else model is trained
+        Client->>AI Model: Input
+        activate AI Model
+        note over AI Model: Inference
+        AI Model->>Client: Fast Inference
+        deactivate AI Model
+    end

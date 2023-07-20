@@ -1,0 +1,43 @@
+?
+
+%% DP2
+graph TB  
+  A["Data"] -- "Split into mini-batches" --> B["Mini-batch 1"]
+  A -- "Split into mini-batches" --> C["Mini-batch 2"]
+  A -- "Split into mini-batches" --> D["Mini-batch 3"]
+  subgraph Server
+  B -- "Train on GPU 1" --> E["Partial Model 1"]
+  C -- "Train on GPU 2" --> F["Partial Model 2"]
+  D -- "Train on GPU 3" --> G["Partial Model 3"]
+  E -- "Aggregate Gradients" <--> H["Updated Model"]
+  F -- "Aggregate Gradients" <--> H
+  G -- "Aggregate Gradients" <--> H
+  end 
+  H -- "weights" --> Model
+
+
+
+%% DP3
+%% graph TB
+%%   A["Data"]
+%%   A -- "Split into batches" --> B["Batch 1"]
+%%   A -- "Split into batches" --> C["Batch 2"]
+%%   A -- "Split into batches" --> D["Batch 3"]
+ 
+%%   subgraph Server1
+%%     B -- "Train on GPU 1" --> E["Model 1"]
+%%   end 
+
+%%   subgraph Server2
+%%     C -- "Train on GPU 2" --> F["Model 2"]
+%%   end
+  
+%%   subgraph ServerN
+%%     D -- "Train on GPU 3" --> G["Model 3"]
+%%   end
+
+%%   E -- "MPI" <--> H["Parameter Server"]
+%%   F -- "MPI" <--> H
+%%   G -- "MPI" <--> H
+
+%%   H -- "Update Global Model" <--> I["Global Model"]
