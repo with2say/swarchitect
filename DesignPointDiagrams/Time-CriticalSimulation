@@ -4,22 +4,27 @@
 graph TB
     Checker["SimulationChecker"] 
     Layout --> Checker
-    Checker --> |no data| Simulator
-
+    Checker -.-> |No data| Simulator
+    LayoutDB -.-> Checker
+    
+    
     subgraph Batch Layer
         LayoutDB["Layouts(DB)"]
+        Simulator    
+        Simulator -.-> |Store Sim.| SimulationDB
+    end
+    
+    
+    subgraph Realtime Layer
+        Layout["LayoutDataset"] --> Collector
+        ResultDB
     end
 
-    LayoutDB --> Checker
-    SimulationDB <--> |Request/Response| Checker
-    Simulator --> SimulationDB
-        
-    subgraph Realtime Layer
-        Layout["Input Layout"]    
-    end
+    SimulationDB --> Collector --> ResultDB
 
 classDef running fill:#f9f,stroke:#333,stroke-width:4px
 class Checker,Simulator running
+
 
 
 # Seq. View
