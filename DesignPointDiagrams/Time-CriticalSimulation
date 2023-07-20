@@ -48,7 +48,36 @@ sequenceDiagram
 
 
 
-# Surrogate Modeling With Ensemble
+## Surrogate Modeling
+
+# Module View
+graph TB    
+    Layout --> SurrogateModel --> ResultDB
+    Trainer --> SurrogateModel
+    
+    subgraph Realtime Layer
+        Layout["Layout"]
+        ResultDB
+    end
+
+    
+
+    subgraph Batch Layer
+        LayoutDB["Layouts(DB)"] --> Dispatcher
+        Dispatcher --> Simulator1
+        Dispatcher --> SimulatorN
+        Simulator1 --> SimulationDB
+        SimulatorN --> SimulationDB
+        SimulationDB --> Trainer
+        
+    end
+    
+    
+classDef running fill:#f9f,stroke:#333,stroke-width:4px
+class Checker,Simulator1,SimulatorN,Dispatcher running
+
+
+# Seq. View
 sequenceDiagram
     participant Client
     participant Simulation as Simulation (CPU Server)
